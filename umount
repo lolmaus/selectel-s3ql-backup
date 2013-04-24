@@ -1,0 +1,6 @@
+#!/bin/bash
+
+BASE=$(dirname $0)
+source "$BASE/vars"
+
+su -s /bin/sh -c 'exec "$0" "$@"' "$USER" -- umount.s3ql "$MOUNTPOINT"

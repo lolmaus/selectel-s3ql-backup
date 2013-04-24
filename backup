@@ -1,0 +1,36 @@
+#!/bin/bash
+
+SCRIPTS_FOLDER="/root/.selectel"
+MOUNT_POINT="/mnt/selectel"
+
+NOW=$(date +"%Y-%m-%d--%H-%M-%S")
+WIKI_DEST="/var/backups/wiki/wiki.lolma.us-$NOW.tar.gz"
+WIKI_SOURCE="/var/vhosts/wiki.lolma.us"
+WIKI_ARCH="$MOUNT_POINT/lin.lolma.us/wiki"
+
+AEGIR_SOURCE="/var/aegir/backups"
+AEGIR_ARCH="$MOUNT_POINT/lin.lolma.us/aegir-sites"
+
+
+echo "Creating a backup of the wiki"
+tar -czf "$WIKI_DEST" "$WIKI_SOURCE"
+
+
+echo "Mounting the remote filesystem"
+$SCRIPTS_FOLDER/mount
+
+
+echo "Storing the wiki backup"
+mv "$WIKI_DEST" "$WIKI_ARCH"
+
+
+echo "Storing Aegir sites backups (should be created on their own)"
+#rsync -aPv --modify-window=60 --itemize-changes --stats --delete "$AEGIR_SOURCE" "$AEGIR_ARCH"
+rsync -aPv --itemize-changes --stats --delete "$AEGIR_SOURCE" "$AEGIR_ARCH"
+
+
+echo "Unmounting"
+#$SCRIPTS_FOLDER/umount
+
+echo "All done."
+

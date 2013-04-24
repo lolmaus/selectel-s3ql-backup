@@ -1,0 +1,4 @@
+STORAGE_URL="swift://auth.selcdn.ru/backups"
+MOUNTPOINT="/mnt/selectel"
+USER="root"
+AUTHFILE="./authfile"

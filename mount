@@ -1,0 +1,18 @@
+#!/bin/bash
+
+BASE=$(dirname $0)
+source "$BASE/vars"
+
+# Redirect stdout and stderr into the system log
+DIR=$(mktemp -d)
+mkfifo "$DIR/LOG_FIFO"
+logger -t s3ql -p local0.info < "$DIR/LOG_FIFO" &
+exec > "$DIR/LOG_FIFO"
+exec 2>&1
+rm -rf "$DIR"
+
+# Check and mount file system
+su -s /bin/sh -c 'exec "$0" "$@"' "$USER" -- \
+    fsck.s3ql --batch --authfile "$BASE/$AUTHFILE" "$STORAGE_URL"
+exec su -s /bin/sh -c 'exec "$0" "$@"' "$USER" -- \
+    mount.s3ql --authfile "$BASE/$AUTHFILE" "$STORAGE_URL" "$MOUNTPOINT"
