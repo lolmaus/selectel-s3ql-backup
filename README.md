@@ -41,4 +41,7 @@ Credit and License
 
 Created by Andrey 'lolmaus' Mikhaylov, covered by the [MIT licence][1].
 
+You are encouraged to use the [issue queue][2] to report problems and suggest ideas.
+
   [1]: http://opensource.org/licenses/MIT
+  [2]: https://github.com/lolmaus/selectel-s3ql-backup/issues
