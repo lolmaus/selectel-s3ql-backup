@@ -24,13 +24,12 @@ echo "Storing the wiki backup"
 mv "$WIKI_DEST" "$WIKI_ARCH"
 
 
-echo "Storing Aegir sites backups (should be created on their own)"
-#rsync -aPv --modify-window=60 --itemize-changes --stats --delete "$AEGIR_SOURCE" "$AEGIR_ARCH"
+echo "Storing Aegir sites backups (should be created and rotated on their own)"
 rsync -aPv --itemize-changes --stats --delete "$AEGIR_SOURCE" "$AEGIR_ARCH"
 
 
 echo "Unmounting"
-#$SCRIPTS_FOLDER/umount
+$SCRIPTS_FOLDER/umount
 
 echo "All done."
 
